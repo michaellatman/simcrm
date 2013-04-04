@@ -30,9 +30,19 @@ $pdoc = $db->payments->findOne(array('account' => $bdoc['_id']));
 
 function generate_people(){
 global $conn;
-$dbd = $GLOBALS;
-		$headers 		= $dbd['HTTP_ENV_VARS'];
-		$ownername 	= $headers["HTTP_X_SECONDLIFE_OWNER_NAME"];
+
+$headers 	= apache_request_headers();
+		$objectgrid 	= $headers["X-SecondLife-Shard"];
+		$objectname 	= $headers["X-SecondLife-Object-Name"];
+		$objectkey     	= $headers["X-SecondLife-Object-Key"];
+		$objectpos 	= $headers["X-SecondLife-Local-Position"];
+		$ownerkey     	= $headers["X-SecondLife-Owner-Key"];
+		$ownername 	= $headers["X-SecondLife-Owner-Name"];
+		$regiondata     = $headers["X-SecondLife-Region"];
+		$regiontmp 	= explode ("(",$regiondata); // cut cords off 
+		$regionpos 	= explode (")",$regiontmp[1]); //
+		$regionname 	= substr($regiontmp[0],0,-1); // cut last space from simname
+
 //$conn = new Mongo("mongodb://kraft:awdadw34@localhost/Kraft");
 
 $db = $conn->CRMSimLegacy;
