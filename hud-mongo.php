@@ -13,18 +13,17 @@ $db = $conn->CRMSimLegacy;
 
 $motd = 'Connected to network. Please note that at some point next week we will be migrating to the new sever scripts. This transition is going to be as seamless as possible. Please stay tuned.';
 
-	$dbd = $GLOBALS;
-		$headers 		= $dbd['HTTP_ENV_VARS'];
-		$objectgrid 	= $headers["HTTP_X_SECONDLIFE_SHARD"]; 
-		$objectname 	= $headers["HTTP_X_SECONDLIFE_OBJECT_NAME"];
-		$objectkey     	= $headers["HTTP_X_SECONDLIFE_OBJECT_KEY"];
-		$ownerkey     	= $headers["HTTP_X_SECONDLIFE_OWNER_KEY"];
-		$objectpos     	= $headers["HTTP_X_SECONDLIFE_LOCAL_POSITION"];
-		$ownername 	= $headers["HTTP_X_SECONDLIFE_OWNER_NAME"];
-		$regiondata     = $headers["HTTP_X_SECONDLIFE_REGION"];
-		$regiontmp 	= explode ("(",$regiondata); 
-		$regionpos 	= explode (")",$regiontmp[1]);
-		$regionname 	= substr($regiontmp[0],0,-1);
+$headers 	= apache_request_headers();
+		$objectgrid 	= $headers["X-SecondLife-Shard"];
+		$objectname 	= $headers["X-SecondLife-Object-Name"];
+		$objectkey     	= $headers["X-SecondLife-Object-Key"];
+		$objectpos 	= $headers["X-SecondLife-Local-Position"];
+		$ownerkey     	= $headers["X-SecondLife-Owner-Key"];
+		$ownername 	= $headers["X-SecondLife-Owner-Name"];
+		$regiondata     = $headers["X-SecondLife-Region"];
+		$regiontmp 	= explode ("(",$regiondata); // cut cords off 
+		$regionpos 	= explode (")",$regiontmp[1]); //
+		$regionname 	= substr($regiontmp[0],0,-1); // cut last space from simname
 
 $bdoc = $db->teams->findOne(array('agents' => $ownername));
 $pdoc = $db->payments->findOne(array('account' => $bdoc['_id']));
