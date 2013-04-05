@@ -49,7 +49,7 @@ $headers 	= apache_request_headers();
 
 //$conn = new Mongo("mongodb://kraft:awdadw34@localhost/Kraft");
 
-$db = $conn->CRMSimLegacy;
+$db = $conn->CRMSim;
 global $pdoc;
 
 echo('people|');
@@ -58,7 +58,7 @@ echo('people|');
 	 
 		
 		
-			$db = $conn->CRMSimLegacy;
+			$db = $conn->CRMSim;
 			$collection = $db->visitors;
 			//$bdoc = $db->teams->findOne(array('agents' => $ownername));
 			$bdoc = $db->teams->findOne(array('lead' => "Allyson Breumann"));
@@ -93,7 +93,7 @@ echo('people|');
 $method = $_REQUEST['method'];
 if($method == "register"){
 	//$ownername = $_REQUEST['owner'];
-	$db = $conn->CRMSimLegacy;
+	$db = $conn->CRMSim;
 	$collection = $db->users;
 	
 	
@@ -127,7 +127,7 @@ if($method == "register"){
 
 }
 else if($method == "lock"){
-	$db = $conn->CRMSimLegacy;
+	$db = $conn->CRMSim;
 	$collection = $db->visitors;
 	$mcollection = $db->users;
 	$time = new DateTime();
@@ -156,7 +156,7 @@ else if($method == "lock"){
 	}
 }
 else if($method == "land-board"){
-	//$db = $conn->CRMSimLegacy;
+	//$db = $conn->CRMSim;
 	$team = $db->teams->findOne(array("agents" => $ownername));
 	$i;
 	$a = $team['agents'];
