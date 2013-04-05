@@ -98,6 +98,7 @@ if($method == "register"){
 	//$bdoc = $db->teams->findOne(array('agents' => $ownername));
 	//$pdoc = $db->payments->findOne(array('account' => $bdoc['_id']));
 	//echo $doc->count() . ' document(s) found. <br/>';
+
 	if($bdoc['lead']!=""){
 		if(count($doc) == 0){
 			$doc['name'] = $ownername;
@@ -113,7 +114,7 @@ if($method == "register"){
   		echo('registered|CRMSuite|'.$motd.""); 	
 	}
 	else{
-		echo('unauthorized|Can\'t connect. Unauthorized.');
+		echo('unauthorized|Can\'t connect. Unauthorized. '.var_dump($bdoc));
 
 	}
 
