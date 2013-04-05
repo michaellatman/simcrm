@@ -114,7 +114,7 @@ if($method == "register"){
   		echo('registered|CRMSuite|'.$motd.""); 	
 	}
 	else{
-		echo('unauthorized|Can\'t connect. Unauthorized. ');
+		echo('unauthorized|Can\'t connect. Unauthorized. '.$ownername);
 		var_dump($bdoc);
 
 	}
