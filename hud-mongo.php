@@ -98,7 +98,7 @@ if($method == "register"){
 	//$bdoc = $db->teams->findOne(array('agents' => $ownername));
 	//$pdoc = $db->payments->findOne(array('account' => $bdoc['_id']));
 	//echo $doc->count() . ' document(s) found. <br/>';
-	if($bdoc['lead']!=""&&$pdoc['disabled']==FALSE){
+	if($bdoc['lead']!=""){
 		if(count($doc) == 0){
 			$doc['name'] = $ownername;
 			//$db->teams->save($bdoc);
