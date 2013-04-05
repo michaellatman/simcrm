@@ -204,15 +204,14 @@ else if($method == "admin-add"){
 	$team = $db->teams->findOne(array("agents" => $ownername));
 	array_push($team['agents'], $_REQUEST['person']);
 	$db->teams->save($team);
-	echo('confirm');
-	var_dump($team);
+	echo($_REQUEST['person']);
 }
 else if($method == "admin-remove"){
 	$team = $db->teams->findOne(array("agents" => $ownername));
 	$toremove = 'foo';
 	unset($team['agents'][array_search($_REQUEST['person'], $team['agents'])]);
 	$db->teams->save($team);
-	echo('confirm');
+	echo($_REQUEST['person']);
 }
 else if($method == "sensor-person"){
 	$collection = $db->visitors;
