@@ -205,6 +205,7 @@ else if($method == "admin-add"){
 	array_push($team['agents'], $_REQUEST['person']);
 	$db->teams->save($team);
 	echo('confirm');
+	var_dump($team);
 }
 else if($method == "admin-remove"){
 	$team = $db->teams->findOne(array("agents" => $ownername));
