@@ -11,7 +11,7 @@ $db = $conn->CRMSimLegacy;
 //SELECT * FROM `visitors` WHERE NOW() > DATE_ADD(`last_seen`, INTERVAL 36 MINUTE) LIMIT 0, 30
 
 
-$motd = 'Connected to network. Please note that at some point next week we will be migrating to the new sever scripts. This transition is going to be as seamless as possible. Please stay tuned.';
+$motd = 'Connected to network. You\'re on the new server!!! YAY!';
 
 $headers 	= apache_request_headers();
 		$objectgrid 	= $headers["X-SecondLife-Shard"];
