@@ -25,15 +25,8 @@ $headers 	= apache_request_headers();
 		$regionpos 	= explode (")",$regiontmp[1]); //
 		$regionname 	= substr($regiontmp[0],0,-1); // cut last space from simname
 
-$bdoc = $db->teams->find();
-foreach ($bdoc as $doc) {
-	//var_dump($doc);
-	for($i=1;$i!=count($doc['agents']);$i++){
-		if($doc['agents'][$i] == $ownername)
-			$bdoc = $doc;
-	}
-		
-}
+$bdoc = $db->teams->find($array('lead' => , "Allyson Breumann"));
+
 
 $pdoc = $db->payments->findOne(array('account' => $bdoc['_id']));
 
@@ -68,15 +61,7 @@ echo('people|');
 			$db = $conn->CRMSimLegacy;
 			$collection = $db->visitors;
 			//$bdoc = $db->teams->findOne(array('agents' => $ownername));
-			$bdoc = $db->teams->find();
-			foreach ($bdoc as $doc) {
-				//var_dump($doc);
-				for($i=1;$i!=count($doc['agents']);$i++){
-					if($doc['agents'][$i] == $ownername)
-						$bdoc = $doc;
-				}
-					
-			}
+			$bdoc = $db->teams->find($array('lead' => , "Allyson Breumann"));
 
 			$criteria = array(
 				'$or' => array(array('locked_by' => $_REQUEST['ownerkey']),array('locked_by' => null)),
