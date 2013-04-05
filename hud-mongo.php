@@ -4,7 +4,7 @@ Created, designed, and implemented by Michael Latman
 © Copyright 2012 Dugley Labs. This product was made under contract of Kraft estates and should not be distributed to 3rd parties without the prior consent of the creator.
 */
 
-$conn = new Mongo("mongodb://kraft:awdadw34@flame.mongohq.com:27103/CRMSimLegacy");
+$conn = new Mongo("mongodb://localhost");
 
 $db = $conn->CRMSimLegacy;
 //include('sql.php');
