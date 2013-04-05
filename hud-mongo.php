@@ -28,7 +28,7 @@ $headers 	= apache_request_headers();
 $bdoc = $db->teams->findOne(array('lead' => "Allyson Breumann"));
 
 
-$pdoc = $db->payments->findOne(array('account' => $bdoc['_id']));
+$pdoc['disabled'] = false;
 
 
 
