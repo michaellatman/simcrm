@@ -27,9 +27,12 @@ $headers 	= apache_request_headers();
 
 $bdoc = $db->teams->find();
 foreach ($bdoc as $doc) {
-	var_dump($doc);
-	if(in_array($ownername, $doc['agents']))
-		$bdoc = $doc;
+	//var_dump($doc);
+	foreach($doc['agents'] as $agent){
+		if($agent == $ownername)
+			$bdoc = $doc;
+	}
+		
 }
 
 $pdoc = $db->payments->findOne(array('account' => $bdoc['_id']));
