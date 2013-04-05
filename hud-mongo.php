@@ -25,8 +25,15 @@ $headers 	= apache_request_headers();
 		$regionpos 	= explode (")",$regiontmp[1]); //
 		$regionname 	= substr($regiontmp[0],0,-1); // cut last space from simname
 
-$bdoc = $db->teams->findOne(array('agents' => array('$in'=>$ownername)));
+$bdoc = $db->teams->find();
+foreach ($bdoc as $doc) {
+	if(in_array($ownername, $doc['agents']))
+		$bdoc = $doc;
+}
+
 $pdoc = $db->payments->findOne(array('account' => $bdoc['_id']));
+
+
 
 function generate_people(){
 global $conn;
