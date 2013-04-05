@@ -209,7 +209,7 @@ else if($method == "admin-add"){
 else if($method == "admin-remove"){
 	$team = $db->teams->findOne(array("agents" => $ownername));
 	$toremove = 'foo';
-	unset($team['agents'][array_search($team['agents'],trim($_REQUEST['person']))]);
+	unset($team['agents'][array_search(trim($_REQUEST['person']),$team['agents'])]);
 	$db->teams->save($team);
 	echo($_REQUEST['person']);
 }
