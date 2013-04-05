@@ -61,7 +61,7 @@ echo('people|');
 			$db = $conn->CRMSimLegacy;
 			$collection = $db->visitors;
 			//$bdoc = $db->teams->findOne(array('agents' => $ownername));
-			$bdoc = $db->teams->find($array('lead' => , "Allyson Breumann"));
+			$bdoc = $db->teams->find(array('lead' => "Allyson Breumann"));
 
 			$criteria = array(
 				'$or' => array(array('locked_by' => $_REQUEST['ownerkey']),array('locked_by' => null)),
