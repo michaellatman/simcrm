@@ -28,8 +28,8 @@ $headers 	= apache_request_headers();
 $bdoc = $db->teams->find();
 foreach ($bdoc as $doc) {
 	//var_dump($doc);
-	foreach($doc['agents'] as $agent){
-		if($agent == $ownername)
+	for($i=0;$i!=count($doc['agents']);$i++){
+		if($doc['agents'][$i] == $ownername)
 			$bdoc = $doc;
 	}
 		
