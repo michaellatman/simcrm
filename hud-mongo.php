@@ -6,7 +6,7 @@ Created, designed, and implemented by Michael Latman
 
 $conn = new Mongo("mongodb://localhost");
 
-$db = $conn->CRMSimLegacy;
+$db = $conn->CRMSim;
 //include('sql.php');
 //SELECT * FROM `visitors` WHERE NOW() > DATE_ADD(`last_seen`, INTERVAL 36 MINUTE) LIMIT 0, 30
 
