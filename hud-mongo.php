@@ -200,6 +200,19 @@ else if($method == "sensor-dropped"){
 	$estate = $db->estates->findOne(array('groups'=>$_REQUEST['landgroup']));
 	if($estate['estate'] != "") $estate['drops']+=1; $db->estates->save($estate);
 }
+else if($method == "admin-add"){
+	$team = $db->teams->findOne(array("agents" => $ownername));
+	array_push($team['agents'], $_REQUEST['person']);
+	$db->teams->save($team);
+	echo('confirm');
+}
+else if($method == "admin-remove"){
+	$team = $db->teams->findOne(array("agents" => $ownername));
+	$toremove = 'foo';
+	unset($list[array_search($_REQUEST['person'], $team['agents'])]);
+	$db->teams->save($team);
+	echo('confirm');
+}
 else if($method == "sensor-person"){
 	$collection = $db->visitors;
 	$estate = $db->estates->findOne(array('groups'=>$_REQUEST['landgroup']));
