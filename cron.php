@@ -53,7 +53,7 @@ foreach ($cursor as $doc) {
 
 
 $collection = $db->visitors;
-
+$collection->remove(array('name' => null));
 
 $tenMinutesAgo = new DateTime();
 $tenMinutesAgo->modify('-15 minutes');
