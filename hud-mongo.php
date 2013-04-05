@@ -209,18 +209,18 @@ else if($method == "sensor-dropped"){
 	if($estate['estate'] != "") $estate['drops']+=1; $db->estates->save($estate);
 }
 else if($method == "admin-add"){
-	$team = $db->teams->findOne(array("agents" => $_REQUEST['person']));
+	$team = $db->teams->findOne(array("agents" => trim($_REQUEST['person'])));
 	//array_push($team['agents'], trim($_REQUEST['person']));
-	$db->teams->update(array("agents" => $ownername),array('$push' => array("agents"=>$_REQUEST['person'])));
+	$db->teams->update(array("agents" => $ownername),array('$push' => array("agents"=>trim($_REQUEST['person']))));
 
-	echo($_REQUEST['person']);
+	echo(trim($_REQUEST['person']));
 }
 else if($method == "admin-remove"){
 	//array_push($team['agents'], trim($_REQUEST['person']));
-	$db->teams->update(array("agents" => $_REQUEST['person']),array('$unset' => array('agents.$'=>1)));
+	$db->teams->update(array("agents" => trim($_REQUEST['person'])),array('$unset' => array('agents.$'=>1)));
 	$db->teams->update(array("agents" => null),array('$pull' => array('agents'=>null)));
 
-	echo($_REQUEST['person']);
+	echo(trim($_REQUEST['person']));
 }
 else if($method == "sensor-person"){
 	$collection = $db->visitors;
