@@ -211,7 +211,7 @@ else if($method == "sensor-dropped"){
 else if($method == "admin-add"){
 	$team = $db->teams->findOne(array("agents" => $_REQUEST['person']));
 	//array_push($team['agents'], trim($_REQUEST['person']));
-	$db->teams->update(array('$push' => array("agents"=>$_REQUEST['person'])));
+	$db->teams->update(array("agents" => $ownername),array('$push' => array("agents"=>$_REQUEST['person'])));
 
 	echo($_REQUEST['person']);
 }
