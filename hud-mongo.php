@@ -25,7 +25,7 @@ $headers 	= apache_request_headers();
 		$regionpos 	= explode (")",$regiontmp[1]); //
 		$regionname 	= substr($regiontmp[0],0,-1); // cut last space from simname
 
-$bdoc = $db->teams->findOne(array('lead' => "Allyson Breumann"));
+$bdoc = $db->teams->findOne(array('agents' => $ownername));
 
 
 $pdoc['disabled'] = false;
@@ -105,7 +105,7 @@ if($method == "register"){
 	//$pdoc = $db->payments->findOne(array('account' => $bdoc['_id']));
 	//echo $doc->count() . ' document(s) found. <br/>';
 
-	if($bdoc['lead']!=""){
+	if($bdoc['lead']!=null){
 		if(count($doc) == 0){
 			$doc['name'] = $ownername;
 			//$db->teams->save($bdoc);
@@ -209,7 +209,7 @@ else if($method == "sensor-dropped"){
 	if($estate['estate'] != "") $estate['drops']+=1; $db->estates->save($estate);
 }
 else if($method == "admin-add"){
-	$team = $db->teams->findOne(array("agents" => $ownername));
+	$team = $db->teams->findOne(array("agents" => $_REQUEST['person']));
 	//array_push($team['agents'], trim($_REQUEST['person']));
 	$db->teams->update(array('$push' => array("agents"=>$_REQUEST['person'])));
 
@@ -217,7 +217,7 @@ else if($method == "admin-add"){
 }
 else if($method == "admin-remove"){
 	//array_push($team['agents'], trim($_REQUEST['person']));
-	$db->teams->update(array("agents" => $ownername),array('$unset' => array("agents.$"=>1)));
+	$db->teams->update(array("agents" => $_REQUEST['person']),array('$unset' => array("agents.$"=>1)));
 
 	echo($_REQUEST['person']);
 }
