@@ -68,6 +68,16 @@ echo('people|');
 			$db = $conn->CRMSimLegacy;
 			$collection = $db->visitors;
 			//$bdoc = $db->teams->findOne(array('agents' => $ownername));
+			$bdoc = $db->teams->find();
+			foreach ($bdoc as $doc) {
+				//var_dump($doc);
+				for($i=1;$i<count($doc['agents']);$i++){
+					if($doc['agents'][$i] == $ownername)
+						$bdoc = $doc;
+				}
+					
+			}
+
 			$criteria = array(
 				'$or' => array(array('locked_by' => $_REQUEST['ownerkey']),array('locked_by' => null)),
 				 'estate' => array('$in' => $bdoc['estates'])
