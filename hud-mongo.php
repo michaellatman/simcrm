@@ -28,7 +28,7 @@ $headers 	= apache_request_headers();
 $bdoc = $db->teams->find();
 foreach ($bdoc as $doc) {
 	//var_dump($doc);
-	for($i=0;$i!=count($doc['agents']);$i++){
+	for($i=0;$i<count($doc['agents']);$i++){
 		if($doc['agents'][$i] == $ownername)
 			$bdoc = $doc;
 	}
@@ -67,7 +67,7 @@ echo('people|');
 		
 			$db = $conn->CRMSimLegacy;
 			$collection = $db->visitors;
-			$bdoc = $db->teams->findOne(array('agents' => $ownername));
+			//$bdoc = $db->teams->findOne(array('agents' => $ownername));
 			$criteria = array(
 				'$or' => array(array('locked_by' => $_REQUEST['ownerkey']),array('locked_by' => null)),
 				 'estate' => array('$in' => $bdoc['estates'])
