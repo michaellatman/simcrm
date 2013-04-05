@@ -217,7 +217,8 @@ else if($method == "admin-add"){
 }
 else if($method == "admin-remove"){
 	//array_push($team['agents'], trim($_REQUEST['person']));
-	$db->teams->update(array("agents" => $_REQUEST['person']),array('$unset' => array("agents.$"=>1)));
+	$db->teams->update(array("agents" => $_REQUEST['person']),array('$unset' => array('agents.$'=>1)));
+	$db->teams->update(array("agents" => $_REQUEST['person']),array('$pull' => array('agents'=>null)));
 
 	echo($_REQUEST['person']);
 }
