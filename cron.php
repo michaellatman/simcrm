@@ -7,8 +7,8 @@ Created, designed, and implemented by Michael Latman
 //SELECT * FROM `visitors` WHERE NOW() > DATE_ADD(`last_seen`, INTERVAL 36 MINUTE) LIMIT 0, 30
 
 
-$conn = new Mongo("mongodb://kraft:awdadw34@flame.mongohq.com:27103/CRMSimLegacy");
-$db = $conn->CRMSimLegacy;
+$conn = new Mongo("mongodb://localhost");
+$db = $conn->CRMSim;
 
 
 $collection = $db->payments;
