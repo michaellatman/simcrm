@@ -210,15 +210,16 @@ else if($method == "sensor-dropped"){
 }
 else if($method == "admin-add"){
 	$team = $db->teams->findOne(array("agents" => $ownername));
-	array_push($team['agents'], trim($_REQUEST['person']));
-	$db->teams->save($team);
+	//array_push($team['agents'], trim($_REQUEST['person']));
+	$db->teams->update(array("$push" => array("agents"=>$_REQUEST['person'])));
+
 	echo($_REQUEST['person']);
 }
 else if($method == "admin-remove"){
 	$team = $db->teams->findOne(array("agents" => $ownername));
-	$toremove = 'foo';
-	unset($team['agents'][array_search(trim($_REQUEST['person']),$team['agents'])]);
-	$db->teams->save($team);
+	//array_push($team['agents'], trim($_REQUEST['person']));
+	$db->teams->update(array("$unset" => array("agents.$"=>1)));
+
 	echo($_REQUEST['person']);
 }
 else if($method == "sensor-person"){
