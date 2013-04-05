@@ -25,7 +25,7 @@ $headers 	= apache_request_headers();
 		$regionpos 	= explode (")",$regiontmp[1]); //
 		$regionname 	= substr($regiontmp[0],0,-1); // cut last space from simname
 
-$bdoc = $db->teams->find($array('lead' => , "Allyson Breumann"));
+$bdoc = $db->teams->find($array('lead' => "Allyson Breumann"));
 
 
 $pdoc = $db->payments->findOne(array('account' => $bdoc['_id']));
