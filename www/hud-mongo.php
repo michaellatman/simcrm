@@ -4,52 +4,79 @@ Created, designed, and implemented by Michael Latman
 © Copyright 2012 Dugley Labs. This product was made under contract of Kraft estates and should not be distributed to 3rd parties without the prior consent of the creator.
 */
 
-$conn = new Mongo("mongodb://mrl4214:j7weWred@localhost");
+if( !function_exists('apache_request_headers') ) {
+///
+function apache_request_headers() {
+  $arh = array();
+  $rx_http = '/\AHTTP_/';
+  foreach($_SERVER as $key => $val) {
+    if( preg_match($rx_http, $key) ) {
+      $arh_key = preg_replace($rx_http, '', $key);
+      $rx_matches = array();
+      // do some nasty string manipulations to restore the original letter case
+      // this should work in most cases
+      $rx_matches = explode('_', $arh_key);
+      if( count($rx_matches) > 0 and strlen($arh_key) > 2 ) {
+        foreach($rx_matches as $ak_key => $ak_val) $rx_matches[$ak_key] = ucfirst($ak_val);
+        $arh_key = implode('-', $rx_matches);
+      }
+      $arh[$arh_key] = $val;
+    }
+  }
+  return( $arh );
+}
+///
+}
+///
+$env = json_decode(file_get_contents("/home/dotcloud/environment.json"), true);
+//echo $env['DOTCLOUD_DATA_MONGODB_URL'];
+$conn = new Mongo($env['DOTCLOUD_DATA_MONGODB_URL']);
 
-$db = $conn->CRMSim;
+$db = $conn->SimCRM;
 //include('sql.php');
 //SELECT * FROM `visitors` WHERE NOW() > DATE_ADD(`last_seen`, INTERVAL 36 MINUTE) LIMIT 0, 30
 
 
-$motd = 'Connected to network. You\'re on the new server!!! YAY!';
-
-$headers 	= apache_request_headers();
-		$objectgrid 	= $headers["X-SecondLife-Shard"];
-		$objectname 	= $headers["X-SecondLife-Object-Name"];
-		$objectkey     	= $headers["X-SecondLife-Object-Key"];
-		$objectpos 	= $headers["X-SecondLife-Local-Position"];
-		$ownerkey     	= $headers["X-SecondLife-Owner-Key"];
-		$ownername 	= $headers["X-SecondLife-Owner-Name"];
-		$regiondata     = $headers["X-SecondLife-Region"];
-		$regiontmp 	= explode ("(",$regiondata); // cut cords off 
-		$regionpos 	= explode (")",$regiontmp[1]); //
-		$regionname 	= substr($regiontmp[0],0,-1); // cut last space from simname
+$motd = 'Connected to network. Welcome to the new DugleyCloud.';
+		
+		$headers 		= apache_request_headers();
+		//var_dump($headers);
+		$objectgrid 	= $headers["X-SECONDLIFE-SHARD"]; 
+		$objectname 	= $headers["X-SECONDLIFE-OBJECT-NAME"];
+		$objectkey     	= $headers["X-SECONDLIFE-OBJECT-KEY"];
+		$ownerkey     	= $headers["X-SECONDLIFE-OWNER-KEY"];
+		$objectpos     	= $headers["X-SECONDLIFE-LOCAL-POSITION"];
+		$ownername 	= $headers["X-SECONDLIFE-OWNER-NAME"];
+		$regiondata     = $headers["X-SECONDLIFE-REGION"];
+		$regiontmp 	= explode ("(",$regiondata); 
+		$regionpos 	= explode (")",$regiontmp[1]);
+		$regionname 	= substr($regiontmp[0],0,-1);
 
 $bdoc = $db->teams->findOne(array('agents' => $ownername));
 
 
 $pdoc['disabled'] = false;
 
+//echo $ownername;
 
-
-function generate_people(){
+function generate_people($headers){
 global $conn;
 
-$headers 	= apache_request_headers();
-		$objectgrid 	= $headers["X-SecondLife-Shard"];
-		$objectname 	= $headers["X-SecondLife-Object-Name"];
-		$objectkey     	= $headers["X-SecondLife-Object-Key"];
-		$objectpos 	= $headers["X-SecondLife-Local-Position"];
-		$ownerkey     	= $headers["X-SecondLife-Owner-Key"];
-		$ownername 	= $headers["X-SecondLife-Owner-Name"];
-		$regiondata     = $headers["X-SecondLife-Region"];
-		$regiontmp 	= explode ("(",$regiondata); // cut cords off 
-		$regionpos 	= explode (")",$regiontmp[1]); //
-		$regionname 	= substr($regiontmp[0],0,-1); // cut last space from simname
+		$objectgrid 	= $headers["X-SECONDLIFE-SHARD"]; 
+		$objectname 	= $headers["X-SECONDLIFE-OBJECT-NAME"];
+		$objectkey     	= $headers["X-SECONDLIFE-OBJECT-KEY"];
+		$ownerkey     	= $headers["X-SECONDLIFE-OWNER-KEY"];
+		$objectpos     	= $headers["X-SECONDLIFE-LOCAL-POSITION"];
+		$ownername 	= $headers["X-SECONDLIFE-OWNER-NAME"];
+		$regiondata     = $headers["X-SECONDLIFE-REGION"];
+		$regiontmp 	= explode ("(",$regiondata); 
+		$regionpos 	= explode (")",$regiontmp[1]);
+		$regionname 	= substr($regiontmp[0],0,-1);
+
 
 //$conn = new Mongo("mongodb://kraft:awdadw34@localhost/Kraft");
 
-$db = $conn->CRMSim;
+$db = $conn->SimCRM;
 global $pdoc;
 
 echo('people|');
@@ -58,7 +85,7 @@ echo('people|');
 	 
 		
 		
-			$db = $conn->CRMSim;
+			$db = $conn->SimCRM;
 			$collection = $db->visitors;
 			//$bdoc = $db->teams->findOne(array('agents' => $ownername));
 			$bdoc = $db->teams->findOne(array('lead' => "Allyson Breumann"));
@@ -80,7 +107,7 @@ echo('people|');
 				if($doc['locked_by'] ==null) $doc['locked_by'] = " ";
 				$pieces = explode("&&", $doc['location']);
 				if($doc['estate'] != '') $doc['estate'] .= '';
-				echo($doc['name'].'//'.$doc['uuid'].'//'.$doc['uuid'].'//'.$doc['locked_by'].'//'.$doc['location'].'&&'.$doc['estate'].'*');					
+				echo($doc['name'].'//'.$doc['uuid'].'// //'.$doc['locked_by'].'//'.$doc['location'].'&&'.$doc['estate'].'*');					
 				}
 				}
 			}
@@ -91,17 +118,18 @@ echo('people|');
 }
 
 $method = $_REQUEST['method'];
+//echo "$method";
 if($method == "register"){
 	//$ownername = $_REQUEST['owner'];
-	$db = $conn->CRMSim;
+	$db = $conn->SimCRM;
 	$collection = $db->users;
 	
 	
 	$criteria = array(
-		'name' => $ownername,
+		'name' => new MongoRegex("/^".$ownername."/i"),
 	);
 	$doc = $collection->findOne($criteria);
-	//$bdoc = $db->teams->findOne(array('agents' => $ownername));
+	//$bdoc = $db->teams->findOne(array('agents' => new MongoRegex("/^".$ownername."/i")));
 	//$pdoc = $db->payments->findOne(array('account' => $bdoc['_id']));
 	//echo $doc->count() . ' document(s) found. <br/>';
 
@@ -127,7 +155,7 @@ if($method == "register"){
 
 }
 else if($method == "lock"){
-	$db = $conn->CRMSim;
+	$db = $conn->SimCRM;
 	$collection = $db->visitors;
 	$mcollection = $db->users;
 	$time = new DateTime();
@@ -139,7 +167,7 @@ else if($method == "lock"){
 			if($row['locked_by'] == $ownerkey){
 				$row['locked_by'] = null;
 				$collection->save($row);
-				generate_people();
+				generate_people($headers);
 			}
 			else{
 				$search = array('key' => $row['locked_by']);
@@ -151,12 +179,12 @@ else if($method == "lock"){
 		else{
 			$row['locked_by'] = $ownerkey;
 			$collection->save($row);
-			generate_people();
+			generate_people($headers);
 		}
 	}
 }
 else if($method == "land-board"){
-	//$db = $conn->CRMSim;
+	//$db = $conn->SimCRM;
 	$team = $db->teams->findOne(array("agents" => $ownername));
 	$i;
 	$a = $team['agents'];
@@ -183,7 +211,7 @@ else if($method == "get-people"){
 		//$doc['last_seen'] = null;	
 	  	$collection->save($doc);
 	  	
-		generate_people();
+		generate_people($headers);
 	}
 	else{
 		
@@ -209,7 +237,7 @@ else if($method == "sensor-dropped"){
 	if($estate['estate'] != "") $estate['drops']+=1; $db->estates->save($estate);
 }
 else if($method == "admin-add"){
-	$team = $db->teams->findOne(array("agents" => trim($_REQUEST['person'])));
+	$team = $db->teams->findOne(array("agents" => trim($ownername)));
 	//array_push($team['agents'], trim($_REQUEST['person']));
 	$db->teams->update(array("agents" => $ownername),array('$push' => array("agents"=>trim($_REQUEST['person']))));
 

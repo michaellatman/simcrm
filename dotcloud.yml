@@ -1,0 +1,6 @@
+www:
+  type: php
+  approot: www
+  postbuild: ./postbuild.sh
+data:
+  type: mongodb

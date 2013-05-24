@@ -1,3 +1,4 @@
+#!/usr/bin/env php
 <?php
 /*
 Created, designed, and implemented by Michael Latman 
@@ -6,9 +7,11 @@ Created, designed, and implemented by Michael Latman
 
 //SELECT * FROM `visitors` WHERE NOW() > DATE_ADD(`last_seen`, INTERVAL 36 MINUTE) LIMIT 0, 30
 
+$env = json_decode(file_get_contents("/home/dotcloud/environment.json"), true);
+//echo $env['DOTCLOUD_DATA_MONGODB_URL'];
+$conn = new Mongo($env['DOTCLOUD_DATA_MONGODB_URL']);
 
-$conn = new Mongo("mongodb://mrl4214:j7weWred@localhost");
-$db = $conn->CRMSim;
+$db = $conn->SimCRM;
 
 
 $collection = $db->payments;
@@ -57,12 +60,24 @@ $collection->remove(array('name' => null));
 
 $tenMinutesAgo = new DateTime();
 $tenMinutesAgo->modify('-15 minutes');
+//echo($tenMinutesAgo);
 	$search = array('updated' => array('$lte' => $tenMinutesAgo));
 $cursor = $collection->remove($search);
 
 
+$collection = $db->estates;
+$collection->remove(array('estate' => null));
+
 $collection = $db->users;
 $vcollection = $db->visitors;
+
+$longTime = new DateTime();
+$longTime->modify('-15 days');
+//echo($tenMinutesAgo);
+	$search = array('last_seen' => array('$lte' => $longTime));
+$cursor = $collection->remove($search);
+
+
 $oneMinutesAgo = new DateTime();
 $oneMinutesAgo->modify('-1 minutes');
 	$search = array('updated' => array('$ne' => null, '$lte' => $oneMinutesAgo));
@@ -78,5 +93,7 @@ foreach ($cursor as $doc) {
 	$doc['updated'] = null;
 	$collection->save($doc);
 }
+
+exit(0);
 
 ?>
