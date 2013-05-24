@@ -1,0 +1,90 @@
+extends layout
+	
+block head
+	script(src='js/dashboard.js')
+
+
+block content
+	.container-fluid
+					.page-header
+						.pull-left
+							h1 Dashboard
+						.pull-right
+							ul.stats
+								li.lightred
+									i.icon-money
+									.details
+										span.big L$400
+										span Balance
+								li.green
+									i.icon-credit-card
+									.details
+										span.big Account renewal failure
+										span Pay Now
+					.breadcrumbs
+						ul
+							li
+								a(href='more-login.html') Home
+								i.icon-angle-right
+							li
+								a(href='more-files.html') Pages
+								i.icon-angle-right
+							li
+								a(href='more-blank.html') Blank page
+						.close-bread
+							a(href='#')
+								i.icon-remove
+					.row-fluid
+						.span6
+								.box.box-color.box-bordered
+										.box-title
+											h3
+												i.icon-bar-chart
+												| Audience Overview
+											.actions
+												a.btn.btn-mini.content-refresh(href='#')
+													i.icon-refresh
+												a.btn.btn-mini.content-remove(href='#')
+													i.icon-remove
+												a.btn.btn-mini.content-slideUp(href='#')
+													i.icon-angle-down
+										.box-content
+											.statistic-big
+												.top
+													.left
+														.input-medium
+															select.chosen-select(name='category', data-nosearch='true')
+																option(value='1') Visits
+																option(value='2') New Visits
+																option(value='3') Unique Visits
+																option(value='4') Pageviews
+													.right
+														| 8,195
+														span
+															i.icon-circle-arrow-up
+												.bottom
+													#flot-audience.flot.medium
+												.bottom
+													ul.stats-overview
+														li
+															span.name
+																| Visits
+															span.value
+																| 11,251
+														li
+															span.name
+																| Pages / Visit
+															span.value
+																| 8.31
+														li
+															span.name
+																| Avg. Duration
+															span.value
+																| 00:06:41
+														li
+															span.name
+																| % New Visits
+															span.value
+																| 67,35%
+
+

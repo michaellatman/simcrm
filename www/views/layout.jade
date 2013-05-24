@@ -1,0 +1,481 @@
+!!! 5
+html
+	head
+		meta(charset='utf-8')
+		meta(name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no')
+		//
+			Apple devices fullscreen 
+		meta(name='apple-mobile-web-app-capable', content='yes')
+		//
+			Apple devices fullscreen 
+		meta(names='apple-mobile-web-app-status-bar-style', content='black-translucent')
+		title FLAT - Dashboard
+		//
+			Bootstrap 
+		link(rel='stylesheet', href='css/bootstrap.min.css')
+		//
+			Bootstrap responsive 
+		link(rel='stylesheet', href='css/bootstrap-responsive.min.css')
+		//
+			jQuery UI 
+		link(rel='stylesheet', href='css/plugins/jquery-ui/smoothness/jquery-ui.css')
+		link(rel='stylesheet', href='css/plugins/jquery-ui/smoothness/jquery.ui.theme.css')
+		//
+			PageGuide 
+		link(rel='stylesheet', href='css/plugins/pageguide/pageguide.css')
+		//
+			Fullcalendar 
+		link(rel='stylesheet', href='css/plugins/fullcalendar/fullcalendar.css')
+		link(rel='stylesheet', href='css/plugins/fullcalendar/fullcalendar.print.css', media='print')
+		//
+			chosen 
+		link(rel='stylesheet', href='css/plugins/chosen/chosen.css')
+		//
+			select2 
+		link(rel='stylesheet', href='css/plugins/select2/select2.css')
+		//
+			icheck 
+		link(rel='stylesheet', href='css/plugins/icheck/all.css')
+		//
+			Theme CSS 
+		link(rel='stylesheet', href='css/style.css')
+		//
+			Color CSS 
+		link(rel='stylesheet', href='css/themes.css')
+		//
+			jQuery 
+		script(src='js/jquery.min.js')
+		//
+			Nice Scroll 
+		script(src='js/plugins/nicescroll/jquery.nicescroll.min.js')
+		//
+			jQuery UI 
+		script(src='js/plugins/jquery-ui/jquery.ui.core.min.js')
+		script(src='js/plugins/jquery-ui/jquery.ui.widget.min.js')
+		script(src='js/plugins/jquery-ui/jquery.ui.mouse.min.js')
+		script(src='js/plugins/jquery-ui/jquery.ui.draggable.min.js')
+		script(src='js/plugins/jquery-ui/jquery.ui.resizable.min.js')
+		script(src='js/plugins/jquery-ui/jquery.ui.sortable.min.js')
+		//
+			Touch enable for jquery UI 
+		script(src='js/plugins/touch-punch/jquery.touch-punch.min.js')
+		//
+			slimScroll 
+		script(src='js/plugins/slimscroll/jquery.slimscroll.min.js')
+		//
+			Bootstrap 
+		script(src='js/bootstrap.min.js')
+		//
+			vmap 
+		script(src='js/plugins/vmap/jquery.vmap.min.js')
+		script(src='js/plugins/vmap/jquery.vmap.world.js')
+		script(src='js/plugins/vmap/jquery.vmap.sampledata.js')
+		//
+			Bootbox 
+		script(src='js/plugins/bootbox/jquery.bootbox.js')
+		//
+			Flot 
+		script(src='js/plugins/flot/jquery.flot.min.js')
+		script(src='js/plugins/flot/jquery.flot.bar.order.min.js')
+		script(src='js/plugins/flot/jquery.flot.pie.min.js')
+		script(src='js/plugins/flot/jquery.flot.resize.min.js')
+		//
+			imagesLoaded 
+		script(src='js/plugins/imagesLoaded/jquery.imagesloaded.min.js')
+		//
+			PageGuide 
+		script(src='js/plugins/pageguide/jquery.pageguide.js')
+		//
+			FullCalendar 
+		script(src='js/plugins/fullcalendar/fullcalendar.min.js')
+		//
+			Chosen 
+		script(src='js/plugins/chosen/chosen.jquery.min.js')
+		//
+			select2 
+		script(src='js/plugins/select2/select2.min.js')
+		//
+			icheck 
+		script(src='js/plugins/icheck/jquery.icheck.min.js')
+		//
+			Theme framework 
+		script(src='js/eakroko.min.js')
+		//
+			Theme scripts 
+		script(src='js/application.js')
+		//
+			Just for demonstration 
+		//script(src='js/demonstration.js')
+		//if lte IE 9
+			script(src='js/plugins/placeholder/jquery.placeholder.min.js')
+			script
+				$(document).ready(function() {
+				$('input, textarea').placeholder();
+				});
+		//
+			Favicon 
+		link(rel='shortcut icon', href='img/favicon.ico')
+		//
+			Apple devices Homescreen icon 
+		link(rel='apple-touch-icon-precomposed', href='img/apple-touch-icon-precomposed.png')
+
+		block head
+	body
+		#navigation
+				.container-fluid
+						a#brand(href='#') FLAT
+						a.toggle-nav(href='#', rel='tooltip', data-placement='bottom', title='Toggle navigation')
+								i.icon-reorder
+						ul.main-nav
+								-	var isActive = null
+								-	if(root==="Dashboard")
+									isActive = "active"
+								li(class=isActive)
+									a(href='index.html')
+										span Dashboard
+								li
+										a.dropdown-toggle(href='#', data-toggle='dropdown')
+												span Forms
+												span.caret
+										ul.dropdown-menu
+												li
+														a(href='forms-basic.html') Basic forms
+												li
+														a(href='forms-extended.html') Extended forms
+												li
+														a(href='forms-validation.html') Validation
+												li
+														a(href='forms-wizard.html') Wizard
+								li
+										a.dropdown-toggle(href='#', data-toggle='dropdown')
+												span Components
+												span.caret
+										ul.dropdown-menu
+												li
+														a(href='components-timeline.html') Timeline
+												li
+														a(href='components-pagestatistics.html') Page statistics
+												li
+														a(href='components-sidebarwidgets.html') Sidebar widgets
+												li
+														a(href='components-messages.html') Messages & Chat
+												li
+														a(href='components-gallery.html') Gallery & Thumbs
+												li
+														a(href='components-tiles.html') Tiles
+												li
+														a(href='components-icons.html') Icons & Buttons
+												li
+														a(href='components-elements.html') UI elements
+												li
+														a(href='components-typography.html') Typography
+												li
+														a(href='components-bootstrap.html') Bootstrap elements
+												li
+														a(href='components-grid.html') Grid
+								li
+										a.dropdown-toggle(href='#', data-toggle='dropdown')
+												span Tables
+												span.caret
+										ul.dropdown-menu
+												li
+														a(href='tables-basic.html') Basic tables
+												li
+														a(href='tables-dynamic.html') Dynamic tables
+												li
+														a(href='tables-large.html') Large tables
+								li
+										a.dropdown-toggle(href='#', data-toggle='dropdown')
+												span Plugins
+												span.caret
+										ul.dropdown-menu
+												li
+														a(href='plugins-charts.html') Charts
+												li
+														a(href='plugins-calendar.html') Calendar
+												li
+														a(href='plugins-filemanager.html') File manager
+												li
+														a(href='plugins-filetrees.html') File trees
+												li
+														a(href='plugins-elements.html') Editable elements
+												li
+														a(href='plugins-maps.html') Maps
+												li
+														a(href='plugins-dragdrop.html') Drag & Drop widgets
+								li
+										a.dropdown-toggle(href='#', data-toggle='dropdown')
+												span Pages
+												span.caret
+										ul.dropdown-menu
+												li
+														a(href='more-error.html') Error pages
+												li.dropdown-submenu
+														a.dropdown-toggle(href='#', data-toggle='dropdown') Shop
+														ul.dropdown-menu
+																li
+																		a(href='more-shop-list.html') List view
+																li
+																		a(href='more-shop-product.html') Product view
+												li
+														a(href='more-pricing.html') Pricing tables
+												li
+														a(href='more-faq.html') FAQ
+												li
+														a(href='more-invoice.html') Invoice
+												li
+														a(href='more-userprofile.html') User profile
+												li
+														a(href='more-searchresults.html') Search results
+												li
+														a(href='more-login.html') Login
+												li
+														a(href='more-locked.html') Lock screen
+												li
+														a(href='more-email.html') Email templates
+												li.active
+														a(href='more-blank.html') Blank page
+												li.dropdown-submenu
+														a.dropdown-toggle(href='#', data-toggle='dropdown') Another submenu
+														ul.dropdown-menu
+																li
+																		a(href='#') This is level 3
+																li
+																		a(href='#') Another page here
+																li.dropdown-submenu
+																		a.dropdown-toggle(href='#', data-toggle='dropdown') Go to level 4
+																		ul.dropdown-menu
+																				li
+																						a(href='#') This is level 4
+																				li
+																						a(href='#') Unlimited levels
+																				li
+																						a(href='#') Easy to use
+								li
+										a.dropdown-toggle(href='#', data-toggle='dropdown')
+												span Layouts
+												span.caret
+										ul.dropdown-menu
+												li
+														a(href='layouts-sidebar-hidden.html') Default hidden sidebar
+												li
+														a(href='layouts-color.html') Different default color
+												li
+														a(href='layouts-fixed.html') Fixed layout
+												li
+														a(href='layouts-fixed-topside.html') Fixed topbar and sidebar
+												li.dropdown-submenu
+														a(href='#') Mobile sidebar
+														ul.dropdown-menu
+																li
+																		a(href='layouts-mobile-slide.html') Slide
+																li
+																		a(href='layouts-mobile-button.html') Button
+												li
+														a(href='layouts-footer.html') Footer
+						.user
+								ul.icon-nav
+										li.dropdown
+												a.dropdown-toggle(href='#', data-toggle='dropdown')
+														i.icon-envelope-alt
+														span.label.label-lightred 4
+												ul.dropdown-menu.pull-right.message-ul
+														li
+																a(href='#')
+																		img(src='img/demo/user-1.jpg', alt='')
+																		.details
+																				.name Jane Doe
+																				.message
+																						| Lorem ipsum Commodo quis nisi ...
+														li
+																a(href='#')
+																		img(src='img/demo/user-2.jpg', alt='')
+																		.details
+																				.name John Doedoe
+																				.message
+																						| Ut ad laboris est anim ut ...
+																		.count
+																				i.icon-comment
+																				span 3
+														li
+																a(href='#')
+																		img(src='img/demo/user-3.jpg', alt='')
+																		.details
+																				.name Bob Doe
+																				.message
+																						| Excepteur Duis magna dolor!
+														li
+																a.more-messages(href='components-messages.html')
+																		| Go to Message center
+																		i.icon-arrow-right
+										li.dropdown.sett
+												a.dropdown-toggle(href='#', data-toggle='dropdown')
+														i.icon-cog
+												ul.dropdown-menu.pull-right.theme-settings
+														li
+																span Layout-width
+																.version-toggle
+																		a.set-fixed(href='#') Fixed
+																		a.active.set-fluid(href='#') Fluid
+														li
+																span Topbar
+																.topbar-toggle
+																		a.set-topbar-fixed(href='#') Fixed
+																		a.active.set-topbar-default(href='#') Default
+														li
+																span Sidebar
+																.sidebar-toggle
+																		a.set-sidebar-fixed(href='#') Fixed
+																		a.active.set-sidebar-default(href='#') Default
+										li.dropdown.colo
+												a.dropdown-toggle(href='#', data-toggle='dropdown')
+														i.icon-tint
+												ul.dropdown-menu.pull-right.theme-colors
+														li.subtitle
+																| Predefined colors
+														li
+																span.red
+																span.orange
+																span.green
+																span.brown
+																span.blue
+																span.lime
+																span.teal
+																span.purple
+																span.pink
+																span.magenta
+																span.grey
+																span.darkblue
+																span.lightred
+																span.lightgrey
+																span.satblue
+																span.satgreen
+										li
+												a.lock-screen(href='more-locked.html', rel='tooltip', title='Lock screen', data-placement='bottom')
+														i.icon-lock
+								.dropdown
+										a.dropdown-toggle(href='#', data-toggle='dropdown')
+												| John Doe
+												img(src='img/demo/user-avatar.jpg', alt='')
+										ul.dropdown-menu.pull-right
+												li
+														a(href='more-userprofile.html') Edit profile
+												li
+														a(href='#') Account settings
+												li
+														a(href='more-login.html') Sign out
+		#content.container-fluid
+				#left
+						form.search-form(action='search-results.html', method='GET')
+								.search-pane
+										input(type='text', name='search', placeholder='Search here...')
+										button(type='submit')
+												i.icon-search
+						.subnav
+								.subnav-title
+										a.toggle-subnav(href='#')
+												i.icon-angle-down
+												span Content
+								ul.subnav-menu
+										li.dropdown
+												a(href='#', data-toggle='dropdown') Articles
+												ul.dropdown-menu
+														li
+																a(href='#') Action #1
+														li
+																a(href='#') Antoher Link
+														li.dropdown-submenu
+																a.dropdown-toggle(href='#', data-toggle='dropdown') Go to level 3
+																ul.dropdown-menu
+																		li
+																				a(href='#') This is level 3
+																		li
+																				a(href='#') Unlimited levels
+																		li
+																				a(href='#') Easy to use
+										li
+												a(href='#') News
+										li
+												a(href='#') Pages
+										li
+												a(href='#') Comments
+						.subnav
+								.subnav-title
+										a.toggle-subnav(href='#')
+												i.icon-angle-down
+												span Plugins
+								ul.subnav-menu
+										li
+												a(href='#') Cache manager
+										li.dropdown
+												a(href='#', data-toggle='dropdown') Import manager
+												ul.dropdown-menu
+														li
+																a(href='#') Action #1
+														li
+																a(href='#') Antoher Link
+														li.dropdown-submenu
+																a.dropdown-toggle(href='#', data-toggle='dropdown') Go to level 3
+																ul.dropdown-menu
+																		li
+																				a(href='#') This is level 3
+																		li
+																				a(href='#') Unlimited levels
+																		li
+																				a(href='#') Easy to use
+										li
+												a(href='#') Contact form generator
+										li
+												a(href='#') SEO optimization
+						.subnav
+								.subnav-title
+										a.toggle-subnav(href='#')
+												i.icon-angle-down
+												span Settings
+								ul.subnav-menu
+										li
+												a(href='#') Theme settings
+										li.dropdown
+												a(href='#', data-toggle='dropdown') Page settings
+												ul.dropdown-menu
+														li
+																a(href='#') Action #1
+														li
+																a(href='#') Antoher Link
+														li.dropdown-submenu
+																a.dropdown-toggle(href='#', data-toggle='dropdown') Go to level 3
+																ul.dropdown-menu
+																		li
+																				a(href='#') This is level 3
+																		li
+																				a(href='#') Unlimited levels
+																		li
+																				a(href='#') Easy to use
+										li
+												a(href='#') Security settings
+						.subnav.subnav-hidden
+								.subnav-title
+										a.toggle-subnav(href='#')
+												i.icon-angle-right
+												span Default hidden
+								ul.subnav-menu
+										li
+												a(href='#') Menu
+										li.dropdown
+												a(href='#', data-toggle='dropdown') With submenu
+												ul.dropdown-menu
+														li
+																a(href='#') Action #1
+														li
+																a(href='#') Antoher Link
+														li.dropdown-submenu
+																a.dropdown-toggle(href='#', data-toggle='dropdown') More stuff
+																ul.dropdown-menu
+																		li
+																				a(href='#') This is level 3
+																		li
+																				a(href='#') Easy to use
+										li
+												a(href='#') Security settings
+				#main
+					block content
