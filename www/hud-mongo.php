@@ -3,7 +3,7 @@
 Created, designed, and implemented by Michael Latman 
 © Copyright 2012 Dugley Labs. This product was made under contract of Kraft estates and should not be distributed to 3rd parties without the prior consent of the creator.
 */
-
+MongoCursor::$slaveOkay = true;
 if( !function_exists('apache_request_headers') ) {
 ///
 function apache_request_headers() {
@@ -267,7 +267,7 @@ else if($method == "sensor-person"){
 	else{
 		$agentname = $db->users->findOne(array('key'=>$row['locked_by']));
 
-		$bdoc = $db->teams->findOne(array('agents' => $agentname['name']));
+		$bdoc = $db->teams->findOne(array('agents' => new MongoRegex("/^".$agentname['name']."/i")));
 		
 		//$pdoc = $db->payments->findOne(array('account' => $bdoc['lead']));
 		//echo('sss'.$bdoc['lead']);

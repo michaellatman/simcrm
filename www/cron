@@ -79,7 +79,7 @@ $cursor = $collection->remove($search);
 
 
 $oneMinutesAgo = new DateTime();
-$oneMinutesAgo->modify('-1 minutes');
+$oneMinutesAgo->modify('-2 minutes');
 	$search = array('updated' => array('$ne' => null, '$lte' => $oneMinutesAgo));
 $cursor = $collection->find($search);
 foreach ($cursor as $doc) { 
