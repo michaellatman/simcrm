@@ -7,6 +7,16 @@ Created, designed, and implemented by Michael Latman
 
 //SELECT * FROM `visitors` WHERE NOW() > DATE_ADD(`last_seen`, INTERVAL 36 MINUTE) LIMIT 0, 30
 
+
+function Dlog($message) {
+	$myFile = "/home/dotcloud/current/cronlog.txt";
+	$fh = fopen($myFile, 'a+') or die("can't open file");
+	fwrite($fh, date('l\, F jS\, Y ').': '.$message."\n");
+	fclose($fh);
+}
+
+Dlog("Cron ran ---- ");
+
 $env = json_decode(file_get_contents("/home/dotcloud/environment.json"), true);
 //echo $env['DOTCLOUD_DATA_MONGODB_URL'];
 $conn = new Mongo($env['DOTCLOUD_DATA_MONGODB_URL']);
@@ -82,7 +92,9 @@ $oneMinutesAgo = new DateTime();
 $oneMinutesAgo->modify('-2 minutes');
 	$search = array('updated' => array('$ne' => null, '$lte' => $oneMinutesAgo));
 $cursor = $collection->find($search);
+
 foreach ($cursor as $doc) { 
+	Dlog($doc['name'].' appears to be offline.. Last seen '.$doc['updated']);
 	$search = array('locked_by' => $doc['key']);
 	$find = $vcollection->find($search);
 	foreach ($find as $doc2) {
