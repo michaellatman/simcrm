@@ -30,7 +30,7 @@ function apache_request_headers() {
 ///
 $env = json_decode(file_get_contents("/home/dotcloud/environment.json"), true);
 //echo $env['DOTCLOUD_DATA_MONGODB_URL'];
-$conn = new Mongo($env['DOTCLOUD_DATA_MONGODB_URL']);
+$conn = new Mongo("mongodb://root:dsXfFEVg4d20eSEtCj6o@simcrmsurreal-mrl4214-data-4.azva.dotcloud.net:1335,simcrmsurreal-mrl4214-data-5.azva.dotcloud.net:1229,simcrmsurreal-mrl4214-data-6.azva.dotcloud.net:1348");
 
 $db = $conn->SimCRM;
 //include('sql.php');
