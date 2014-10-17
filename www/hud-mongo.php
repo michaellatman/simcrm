@@ -30,7 +30,14 @@ function apache_request_headers() {
 ///
 $env = json_decode(file_get_contents("/home/dotcloud/environment.json"), true);
 //echo $env['DOTCLOUD_DATA_MONGODB_URL'];
-$conn = new Mongo("mongodb://root:dsXfFEVg4d20eSEtCj6o@simcrmsurreal-mrl4214-data-4.azva.dotcloud.net:1335,simcrmsurreal-mrl4214-data-5.azva.dotcloud.net:1229,simcrmsurreal-mrl4214-data-6.azva.dotcloud.net:1348");
+
+  /*$host   = $_ENV["OPENSHIFT_MONGODB_DB_HOST"];
+     $user   = $_ENV["OPENSHIFT_MONGODB_DB_USERNAME"];
+     $passwd = $_ENV["OPENSHIFT_MONGODB_DB_PASSWORD"];
+     $port   = $_ENV["OPENSHIFT_MONGODB_DB_PORT"];
+
+     $uri = "mongodb://" . $user . ":" . $passwd . "@" . $host . ":" . $port;*/
+$conn = new Mongo($env['DOTCLOUD_DATA_MONGODB_URL']);
 
 $db = $conn->SimCRM;
 //include('sql.php');
@@ -52,7 +59,7 @@ $motd = 'Connected to network. Welcome to the new DugleyCloud.';
 		$regionpos 	= explode (")",$regiontmp[1]);
 		$regionname 	= substr($regiontmp[0],0,-1);
 
-$bdoc = $db->teams->findOne(array('agents' => $ownername));
+$bdoc = $db->teams->findOne(array('agents' => new MongoRegex("/^".$ownername."/i"))); 
 
 
 $pdoc['disabled'] = false;
@@ -91,8 +98,8 @@ echo('people|');
 			$bdoc = $db->teams->findOne(array('lead' => "Allyson Breumann"));
 
 			$criteria = array(
-				'$or' => array(array('locked_by' => $_REQUEST['ownerkey']),array('locked_by' => null)),
-				 'estate' => array('$in' => $bdoc['estates'])
+				'$or' => array(array('locked_by' => $_REQUEST['ownerkey']),array('locked_by' => null))
+				 //'estate' => array('$in' => $bdoc['estates'])
 			);
 		
 			$cursor = $collection->find($criteria);
@@ -106,8 +113,7 @@ echo('people|');
 				if($doc['name'] != ""){
 				if($doc['locked_by'] ==null) $doc['locked_by'] = " ";
 				$pieces = explode("&&", $doc['location']);
-				if($doc['estate'] != '') $doc['estate'] .= '';
-				echo($doc['name'].'//'.$doc['uuid'].'// //'.$doc['locked_by'].'//'.$doc['location'].'&&'.$doc['estate'].'*');					
+				echo($doc['name'].'//'.$doc['uuid'].'// //'.$doc['locked_by'].'//'.$doc['location'].'&&'.'*');					
 				}
 				}
 			}
@@ -233,8 +239,8 @@ else if($method == "remove-person"){
 	//generate_people();
 }
 else if($method == "sensor-dropped"){
-	$estate = $db->estates->findOne(array('groups'=>$_REQUEST['landgroup']));
-	if($estate['estate'] != "") $estate['drops']+=1; $db->estates->save($estate);
+	//$estate = $db->estates->findOne(array('groups'=>$_REQUEST['landgroup']));
+	//if($estate['estate'] != "") $estate['drops']+=1; $db->estates->save($estate);
 }
 else if($method == "admin-add"){
 	$team = $db->teams->findOne(array("agents" => trim($ownername)));
@@ -274,17 +280,8 @@ else if($method == "sensor-person"){
 		//echo('say|'. );
 		$row['updated'] = $time;
 		$row['location'] = $_REQUEST['location'];
-		if($row['estate']!=$estate['estate']){ 
-			$row['estate'] = $estate['estate'];
-			//if($estate['estate'])
-			if($bdoc['estates'] != null){ 
-				if(in_array($estate['estate'], $bdoc['estates']) == FALSE){ 
-					$row['locked_by'] = null;
-					$estate['newleads']+=1; $db->estates->save($estate);
-				}
-			
-			}
-		}
+	 
+	
 
 		$collection->save($row);
 		//mysql_query("UPDATE visitors SET location = '".$_REQUEST['location']."', uuid = '".$_REQUEST['uuid']."', last_seen = CURRENT_TIMESTAMP  WHERE uuid = '".$_REQUEST['uuid']."'") or die(mysql_error());
